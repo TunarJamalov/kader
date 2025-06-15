@@ -148,48 +148,22 @@ body {
     opacity: 0.5; /* Boş kalpler daha soluk olabilir */
 }
 
-/* Ayarlar ve harita butonları (şimdilik gizli, istersen aktif et) */
-/*
-.top-right-controls {
-    position: absolute;
-    right: 0;
-    display: flex;
-    gap: 10px;
-}
-.control-button {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8em;
-    cursor: pointer;
-    color: #fff;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-.control-button:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-    transform: scale(1.1);
-}
-*/
-
 /* Hikaye Metni Scroll Frame */
 .story-scroll-frame {
     position: relative;
     width: 80%; /* Genişliği ayarla */
     max-width: 700px;
-    height: 200px; /* Yüksekliği ayarla */
+    /* Yüksekliği artırıldı ve padding'e göre ayarlandı */
+    height: 250px; /* Metin için daha fazla alan */
     background-image: url('img/scroll_frame.png'); /* Kaydırma çubuğu çerçeve görseli */
     background-size: 100% 100%; /* Çerçeveyi tam olarak sığdır */
     background-repeat: no-repeat;
     display: flex; /* İçindeki metni ortalamak için */
     justify-content: center;
     align-items: center;
-    padding: 30px 50px; /* Çerçevenin içindeki boşluk */
-    box-sizing: border-box;
+    /* Padding artırıldı ve metnin taşmaması için ayarlandı */
+    padding: 50px 70px; /* Çerçevenin içindeki boşluk, kenarlardan taşmayı önler */
+    box-sizing: border-box; /* Padding'in genişlik ve yüksekliğe dahil edilmesini sağlar */
     z-index: 2; /* Kartların ve diğer öğelerin altında kalsın */
     margin-top: 100px; /* Kalplerin altından başlasın */
 }
@@ -200,7 +174,8 @@ body {
     line-height: 1.7;
     color: #4a3a2d; /* Açık kahve tonu, görseldeki metin rengine yakın */
     text-align: center; /* Metni ortala */
-    height: 100%; /* Çerçevenin içindeki tüm alanı kapla */
+    width: 100%; /* Çerçevenin içindeki content alanını kapla */
+    height: 100%; /* Çerçevenin içindeki content alanını kapla */
     overflow-y: auto; /* Gerekirse kaydırma çubuğu */
     padding-right: 15px; /* Kaydırma çubuğu için boşluk */
     box-sizing: border-box;
@@ -239,14 +214,14 @@ body {
     background-color: rgba(220, 190, 150, 0.9); /* Açık kahve/krem tonu, hafif şeffaf */
     border: 3px solid #8b4513; /* Koyu kahve çerçeve */
     border-radius: 12px;
-    padding: 30px 20px; /* Dolguyu artır */
+    /* padding kaldırıldı, içerik kendi içindeki elemanlarla boşluk oluşturacak */
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 280px;
-    min-height: 150px; /* Yüksekliği artır */
+    width: 280px; /* Genişlik artırıldı */
+    min-height: 250px; /* Yüksekliği artırıldı */
     display: flex;
-    flex-direction: column; /* İçeriği dikey ortalamak için */
-    justify-content: center;
+    flex-direction: column; /* İçeriği dikey sırala */
+    justify-content: space-between; /* Metni üste, görseli alta yasla */
     align-items: center;
     font-size: 1.2em; /* Yazı boyutunu biraz artır */
     font-weight: bold;
@@ -270,12 +245,28 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Kart içindeki metin için stil */
+.choice-card p {
+    padding: 15px 10px; /* Metne iç boşluk ver */
+    margin: 0; /* Varsayılan marginleri kaldır */
+    width: 100%; /* Genişliği tam yap */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px; /* Metin alanı için minimum yükseklik */
+    background-color: rgba(255, 255, 255, 0.2); /* Metin arka planı hafif şeffaf */
+    border-bottom: 1px solid rgba(139, 69, 19, 0.3); /* Ayırıcı çizgi */
+}
+
+
 /* Kart içindeki görseller için (JS ile eklenecek) */
 .card-image {
-    width: 120px; /* Görsel boyutu */
-    height: 120px;
-    object-fit: contain; /* Görseli bozmadan sığdır */
-    margin-bottom: 15px; /* Metinden boşluk */
+    width: 100%; /* Kartın genişliğini tam kapla */
+    height: 100%; /* Kartın yüksekliğini tam kapla (kalan alanı) */
+    object-fit: cover; /* Görseli bozmadan kartın içine sığdır ve alanı doldur */
+    display: block; /* Boşlukları kaldırmak için */
+    margin: 0; /* Varsayılan marginleri kaldır */
 }
 
 
@@ -303,8 +294,8 @@ body {
 
     .story-scroll-frame {
         width: 95%;
-        height: 180px;
-        padding: 20px 30px;
+        height: 200px; /* Küçük ekranda hikaye metni yüksekliği */
+        padding: 30px 40px; /* Küçük ekranda padding */
         margin-top: 80px;
     }
     .story-text {
@@ -317,9 +308,15 @@ body {
     .choice-card {
         width: 100%;
         max-width: 300px;
-        padding: 20px 15px;
-        min-height: 100px;
+        min-height: 200px; /* Küçük ekranda kart yüksekliği */
         font-size: 1em;
+    }
+    .choice-card p {
+        padding: 10px 8px; /* Küçük ekranda metin padding'i */
+        min-height: 50px;
+    }
+    .card-image {
+        /* Küçük ekranda da aynı oranları koru */
     }
     .top-overlay {
         width: 95%;

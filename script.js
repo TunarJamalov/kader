@@ -1,4 +1,4 @@
-// script.js
+// script.js (Sadece loadScene fonksiyonu güncellenmiş hali)
 
 // DOM elemanlarını seçelim
 const startButton = document.getElementById('startButton');
@@ -307,7 +307,7 @@ const scenes = {
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'loveEnding': {
-        text: "Elara, kalbini ısıtan biriyle tanıştı. Dileği gerçek olmuştu, ama bu ilişkinin önündeki engeller, sıradan bir hayatın zorluklarından çok daha fazlaydı. Aşkları sınandı, imkansızlıklarla yüzleştiler. İki kalbi birleştirmek için büyük fedakarlıklar yapması, kendi dileğinden bile vazgeçmesi gerekti. Büyük zorluklar karşısında dahi aşkına sadık kaldı ve gerçek mutluluğu buldu. Oyun Sonu.",
+        text: "Elara, kalbini ısıtan biriyle tanıştı. Dileği gerçek olmuştu, ama bu ilişkinin önündeki engeller, sıradan bir hayatın zorluklarından çok daha fazlasıydı. Aşkları sınandı, imkansızlıklarla yüzleştiler. İki kalbi birleştirmek için büyük fedakarlıklar yapması, kendi dileğinden bile vazgeçmesi gerekti. Büyük zorluklar karşısında dahi aşkına sadık kaldı ve gerçek mutluluğu buldu. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'knowledgeEnding': {
@@ -340,7 +340,6 @@ const scenes = {
     }
 };
 
-// ... (updateHearts, loadScene ve event listener kodları buranın altında aynen kalacak) ...
 
 // Oyunun şu anki sahnesini tutan değişken
 let currentScene = 'intro';
@@ -395,6 +394,12 @@ function loadScene(sceneName) {
             const choiceCard = document.createElement('div');
             choiceCard.classList.add('choice-card');
             
+            // Metin üstte
+            const choiceText = document.createElement('p');
+            choiceText.textContent = choice.text;
+            choiceCard.appendChild(choiceText);
+
+            // Görsel altta, kartın kalanını kaplayacak
             if (choice.textImage) {
                 const img = document.createElement('img');
                 img.src = choice.textImage;
@@ -402,11 +407,6 @@ function loadScene(sceneName) {
                 img.classList.add('card-image');
                 choiceCard.appendChild(img);
             }
-
-            const choiceText = document.createElement('p');
-            choiceText.textContent = choice.text;
-            choiceCard.appendChild(choiceText);
-
 
             choiceCard.addEventListener('click', () => {
                 if (choice.damage !== undefined) {
