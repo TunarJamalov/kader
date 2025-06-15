@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Son Dilek Ağacı - Ana Menü</title>
+    <title>Son Dilek Ağacı</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="menu-container">
@@ -14,10 +15,23 @@
     </div>
 
     <div id="gameContainer" class="game-container hidden">
-        <p id="storyText" class="story-text"></p>
+        <div class="game-background"></div>
+
+        <div class="top-overlay">
+            <div id="heartsContainer" class="hearts-container">
+                </div>
+            <div class="top-right-controls">
+                </div>
+        </div>
+
+        <div class="story-scroll-frame">
+            <p id="storyText" class="story-text"></p>
+        </div>
+
         <div id="choicesContainer" class="choices-container">
             </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

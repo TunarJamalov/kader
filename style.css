@@ -1,173 +1,334 @@
 /* Genel Ayarlar */
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Daha modern ve okunur bir font */
+    /* Fontları Google Fonts'tan aldığımızı varsayarsak */
+    font-family: 'Merriweather', serif; /* Ana metinler için daha klasik bir font */
     display: flex;
-    justify-content: center; /* Yatayda ortala */
-    align-items: center;     /* Dikeyde ortala */
-    min-height: 100vh;       /* Ekranın tamamını kapla */
-    background: linear-gradient(to right, #6a11cb, #2575fc); /* Hoş bir gradyan arka plan */
-    color: #fff;             /* Metin rengi beyaz */
-    overflow: hidden;        /* Taşmaları gizle */
-}
-
-/* Ana Menü Kapsayıcısı */
-.menu-container {
-    background-color: rgba(0, 0, 0, 0.6); /* Hafif şeffaf siyah arka plan */
-    padding: 40px 60px;
-    border-radius: 15px; /* Yuvarlak köşeler */
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Hafif gölge efekti */
-    max-width: 500px; /* Maksimum genişlik */
-    width: 90%; /* Duyarlı tasarım için */
-    animation: fadeIn 1.5s ease-out; /* Menüye giriş animasyonu */
-}
-
-/* Başlık */
-.menu-container h1 {
-    font-size: 3em; /* Büyük başlık fontu */
-    margin-bottom: 20px;
-    letter-spacing: 2px; /* Harf aralığı */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Hafif parıltı */
-}
-
-/* Açıklama Paragrafı */
-.menu-container p {
-    font-size: 1.2em;
-    margin-bottom: 40px;
-    line-height: 1.6; /* Satır aralığı */
-    opacity: 0.9; /* Hafif şeffaflık */
-}
-
-/* Başlat Butonu */
-.menu-container button {
-    background-color: #28a745; /* Yeşil tonlarında bir buton rengi */
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.3em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Hover animasyonu */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Butona gölge */
-}
-
-.menu-container button:hover {
-    background-color: #218838; /* Hover'da daha koyu yeşil */
-    transform: translateY(-3px); /* Hafif yukarı kayma efekti */
-}
-
-.menu-container button:active {
-    transform: translateY(0); /* Tıklamada eski yerine dönme */
-}
-
-/* Animasyonlar */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-/* Genel Oyun Kapsayıcısı */
-.game-container {
-    display: flex;
-    flex-direction: column; /* İçeriği dikey sırala */
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    width: 100%;
-    max-width: 800px; /* Oyun alanı için maksimum genişlik */
-    padding: 20px;
-    box-sizing: border-box; /* Padding'in genişliği etkilememesini sağla */
-    background-color: rgba(0, 0, 0, 0.7); /* Hafif şeffaf koyu arka plan */
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    background: #333; /* Genel sayfa arka planı */
     color: #fff;
+    overflow: hidden;
+}
+
+/* Ana Menü Kapsayıcısı (Mevcut haliyle kalsın veya güncelleyin) */
+.menu-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 40px 60px;
+    border-radius: 15px;
     text-align: center;
-    opacity: 0; /* Başlangıçta gizli olması için */
-    transform: scale(0.95); /* Hafif küçültülmüş başlangıç */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Yumuşak geçiş */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    max-width: 500px;
+    width: 90%;
+    animation: fadeIn 1.5s ease-out;
+    position: relative; /* Z-index için */
+    z-index: 10;
 }
 
-/* Hidden Sınıfı: Başlangıçta ve gizlenmesi gereken durumlarda kullanılır */
-.hidden {
-    display: none !important; /* display:none ile tamamen gizle, !important ile diğer stilleri geçersiz kıl */
+.menu-container h1 {
+    font-family: 'Playfair Display', serif; /* Başlıklar için farklı bir font */
+    font-size: 3.5em; /* Daha büyük başlık */
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    color: #ffd700; /* Altın rengi tonu */
 }
 
-/* Görünür Hale Geldiğinde */
+.menu-container p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    opacity: 0.95;
+    color: #e0e0e0;
+}
+
+.menu-container button {
+    background-color: #a0522d; /* Toprak tonlarında bir buton */
+    color: white;
+    border: 2px solid #8b4513;
+    padding: 18px 35px;
+    font-size: 1.5em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Merriweather', serif;
+    letter-spacing: 1px;
+}
+
+.menu-container button:hover {
+    background-color: #8b4513;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.menu-container button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Oyun Kapsayıcısı */
+.game-container {
+    position: relative; /* Arka planı ve diğer öğeleri konumlandırmak için */
+    width: 100vw; /* Tam ekran genişliği */
+    height: 100vh; /* Tam ekran yüksekliği */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #333; /* Oyun metinleri için koyu renk */
+    opacity: 0; /* Başlangıçta gizli */
+    transition: opacity 0.5s ease;
+}
+
 .game-container.visible {
     opacity: 1;
-    transform: scale(1);
 }
 
-/* Hikaye Metni */
-.story-text {
-    font-size: 1.5em;
-    margin-bottom: 40px;
-    line-height: 1.8;
-    max-height: 400px; /* Metin için maksimum yükseklik */
-    overflow-y: auto; /* Gerekirse kaydırma çubuğu */
-    padding: 0 20px;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+.hidden {
+    display: none !important;
 }
+
+/* Oyun Arka Planı */
+.game-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/game_bg.jpg'); /* Kendi arka plan görseliniz */
+    background-size: cover; /* Tüm alanı kapla */
+    background-position: center; /* Ortala */
+    filter: brightness(0.8) contrast(1.1); /* Hafif karartma ve kontrast */
+    z-index: 1; /* Diğer öğelerin altında kalmasını sağla */
+}
+
+/* Üst Kısım Yerleşimi (Kalpler vb.) */
+.top-overlay {
+    position: absolute;
+    top: 20px; /* Üstten boşluk */
+    left: 50%;
+    transform: translateX(-50%); /* Yatayda ortala */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5; /* Diğer öğelerin üzerinde olsun */
+    width: 90%; /* Genişlik */
+    max-width: 600px;
+}
+
+/* Kalpler Kapsayıcısı */
+.hearts-container {
+    display: flex;
+    gap: 10px; /* Kalpler arası boşluk */
+    background-color: rgba(0, 0, 0, 0.4); /* Hafif şeffaf arka plan */
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Kalp İkonu */
+.heart-icon {
+    width: 40px; /* Kalp ikon boyutu */
+    height: 40px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.2s ease;
+}
+
+.heart-full {
+    background-image: url('img/heart_full.png'); /* Dolu kalp ikonu */
+}
+
+.heart-empty {
+    background-image: url('img/heart_empty.png'); /* Boş kalp ikonu (opsiyonel) */
+    opacity: 0.5; /* Boş kalpler daha soluk olabilir */
+}
+
+/* Ayarlar ve harita butonları (şimdilik gizli, istersen aktif et) */
+/*
+.top-right-controls {
+    position: absolute;
+    right: 0;
+    display: flex;
+    gap: 10px;
+}
+.control-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8em;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.control-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+*/
+
+/* Hikaye Metni Scroll Frame */
+.story-scroll-frame {
+    position: relative;
+    width: 80%; /* Genişliği ayarla */
+    max-width: 700px;
+    height: 200px; /* Yüksekliği ayarla */
+    background-image: url('img/scroll_frame.png'); /* Kaydırma çubuğu çerçeve görseli */
+    background-size: 100% 100%; /* Çerçeveyi tam olarak sığdır */
+    background-repeat: no-repeat;
+    display: flex; /* İçindeki metni ortalamak için */
+    justify-content: center;
+    align-items: center;
+    padding: 30px 50px; /* Çerçevenin içindeki boşluk */
+    box-sizing: border-box;
+    z-index: 2; /* Kartların ve diğer öğelerin altında kalsın */
+    margin-top: 100px; /* Kalplerin altından başlasın */
+}
+
+/* Hikaye Metni İçinde */
+.story-text {
+    font-size: 1.4em;
+    line-height: 1.7;
+    color: #4a3a2d; /* Açık kahve tonu, görseldeki metin rengine yakın */
+    text-align: center; /* Metni ortala */
+    height: 100%; /* Çerçevenin içindeki tüm alanı kapla */
+    overflow-y: auto; /* Gerekirse kaydırma çubuğu */
+    padding-right: 15px; /* Kaydırma çubuğu için boşluk */
+    box-sizing: border-box;
+    /* Özel kaydırma çubuğu stili (Webkit tarayıcılar için) */
+    scrollbar-width: thin;
+    scrollbar-color: #a0522d #f0d8b6; /* Kaydırma çubuğu rengi */
+}
+
+/* Webkit tabanlı tarayıcılar için (Chrome, Safari, Edge) */
+.story-text::-webkit-scrollbar {
+    width: 10px;
+}
+.story-text::-webkit-scrollbar-track {
+    background: #f0d8b6; /* Track rengi */
+    border-radius: 5px;
+}
+.story-text::-webkit-scrollbar-thumb {
+    background-color: #a0522d; /* Thumb rengi */
+    border-radius: 5px;
+    border: 2px solid #f0d8b6;
+}
+
 
 /* Seçim Kartları Kapsayıcısı */
 .choices-container {
     display: flex;
-    flex-wrap: wrap; /* Kartları alt alta veya yan yana düzenle */
-    justify-content: center; /* Kartları ortaya hizala */
-    gap: 20px; /* Kartlar arası boşluk */
-    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Kartlar arası boşluğu artır */
+    margin-top: 50px; /* Metin çerçevesinin altından başlasın */
+    z-index: 3; /* Arka planın ve metin çerçevesinin üzerinde olsun */
 }
 
-/* Seçim Kartı (Dinamik olarak eklenecek) */
+/* Seçim Kartı */
 .choice-card {
-    background-color: rgba(30, 30, 30, 0.8); /* Koyu gri, yarı saydam */
-    border: 2px solid #6a11cb; /* Mor çerçeve */
-    border-radius: 10px;
-    padding: 25px;
+    background-color: rgba(220, 190, 150, 0.9); /* Açık kahve/krem tonu, hafif şeffaf */
+    border: 3px solid #8b4513; /* Koyu kahve çerçeve */
+    border-radius: 12px;
+    padding: 30px 20px; /* Dolguyu artır */
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 280px; /* Kart genişliği */
-    min-height: 120px; /* Minimum kart yüksekliği */
+    width: 280px;
+    min-height: 150px; /* Yüksekliği artır */
     display: flex;
+    flex-direction: column; /* İçeriği dikey ortalamak için */
     justify-content: center;
     align-items: center;
-    font-size: 1.1em;
+    font-size: 1.2em; /* Yazı boyutunu biraz artır */
     font-weight: bold;
-    color: #eee; /* Metin rengi */
+    color: #4a3a2d; /* Koyu metin rengi */
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    user-select: none; /* Metin seçimi engelle */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Gölgeyi artır */
+    user-select: none;
+    position: relative; /* İçerik görsellerini konumlandırmak için */
+    overflow: hidden; /* Taşmaları gizle */
 }
 
 .choice-card:hover {
-    background-color: rgba(45, 45, 45, 0.9);
-    border-color: #2575fc; /* Hover'da mavi çerçeve */
-    transform: translateY(-5px) scale(1.02); /* Hafif yukarı kalkma ve büyüme */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    background-color: rgba(230, 200, 160, 0.95);
+    border-color: #a0522d; /* Hover'da daha belirgin kahve */
+    transform: translateY(-8px) scale(1.04); /* Daha belirgin kalkma ve büyüme */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
 }
 
 .choice-card:active {
-    transform: translateY(0) scale(1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Kart içindeki görseller için (JS ile eklenecek) */
+.card-image {
+    width: 120px; /* Görsel boyutu */
+    height: 120px;
+    object-fit: contain; /* Görseli bozmadan sığdır */
+    margin-bottom: 15px; /* Metinden boşluk */
+}
+
+
+/* Animasyonlar */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Küçük ekranlar için duyarlılık */
 @media (max-width: 768px) {
-    .game-container {
-        padding: 15px;
+    .menu-container {
+        padding: 30px 40px;
+    }
+    .menu-container h1 {
+        font-size: 2.5em;
+    }
+    .menu-container p {
+        font-size: 1.1em;
+    }
+    .menu-container button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+    }
+
+    .story-scroll-frame {
+        width: 95%;
+        height: 180px;
+        padding: 20px 30px;
+        margin-top: 80px;
     }
     .story-text {
-        font-size: 1.3em;
-        margin-bottom: 25px;
+        font-size: 1.2em;
+    }
+    .choices-container {
+        gap: 15px;
+        margin-top: 30px;
     }
     .choice-card {
-        width: 100%; /* Mobil cihazlarda kartları tam genişlik yap */
-        max-width: 350px; /* Maksimum genişliği kısıtla */
+        width: 100%;
+        max-width: 300px;
+        padding: 20px 15px;
+        min-height: 100px;
+        font-size: 1em;
+    }
+    .top-overlay {
+        width: 95%;
+    }
+    .hearts-container {
+        padding: 8px 15px;
+    }
+    .heart-icon {
+        width: 30px;
+        height: 30px;
     }
 }
