@@ -12,221 +12,327 @@ const heartsContainer = document.getElementById('heartsContainer'); // Kalplerin
 let gameState = {
     currentHP: 4, // Maksimum can sayısını görseldeki gibi 4 yapalım
     maxHP: 4,
-    inventory: [] // Belki ileride kullanırız (örn: pusula)
+    inventory: [] // Oyuncunun sahip olduğu eşyalar (örn: 'pusula')
 };
 
-// Oyunun tüm sahneleri (hikaye veri yapısı)
 const scenes = {
-    // Giriş sahnesi (Ana menüden sonraki ilk sahne)
+    // Giriş sahnesi
     'intro': {
-        text: "Güneş, küçük ve huzurlu Woodhollow Köyü'nün yemyeşil tepelerinin üzerinden yeni doğuyordu. Kuş sesleri ve fırıncı Amca Borin'in ekmek kokusu havayı dolduruyordu. Elara, 20'li yaşlarının başında, penceresinden dışarı bakarken içinde tuhaf bir sıkıntı hissediyordu. Köy hayatı güzeldi ama o hep daha fazlasını hayal etmişti: macera, keşif, bilinmeyene yolculuk...",
+        text: "Güneş, küçük ve huzurlu Woodhollow Köyü'nün yemyeşil tepelerinin üzerinden yeni doğuyordu. Kuş sesleri ve fırıncı Amca Borin'in ekmek kokusu havayı dolduruyordu. Elara, 20'li yaşlarının başında, penceresinden dışarı bakarken içinde tuhaf bir sıkıntı hissediyordu. Köy hayatı güzeldi ama o hep daha fazlasını hayal etmişti: macera, keşif, bilinmeyene yolculuk...\n\nDün gece duyduğu yaşlıların fısıltıları zihninde yankılanıyordu: 'Woodhollow Ormanı'nın derinliklerinde, efsanelere göre, 'Son Dilek Ağacı' varmış. Dilekleri gerçekleştirdiği söylenen, ama aynı zamanda büyük bedelleri de olan bir ağaç...'",
         choices: [
             { 
                 text: "Bugün ne yapmalıyım?", 
                 nextScene: 'morningDecision',
-                textImage: 'img/what_to_do.png' // Örnek kart görseli yolu
+                textImage: 'img/what_to_do.png' 
             }
         ]
     },
     
     // Sahne 1: Sabahın Kararı
     'morningDecision': {
-        text: "Sabah kahvaltısının ardından, Elara kendini iki yol ayrımında buldu.",
+        text: "Sabah kahvaltısının ardından, Elara kendini iki yol ayrımında buldu. İçindeki huzursuzluk, onu sıradan bir güne mi devam edeceğine, yoksa bilinmeyene mi adım atacağına dair zorlu bir karara itiyordu. Köyün tanıdık yüzleri bir yanda, ormanın gizemli çağrısı diğer yanda...",
         choices: [
             { 
-                text: "Köyde kalıp günlük işlerine devam etmek.", 
+                text: "Köyde kalıp günlük işlerine devam etmek. (Güvenli Yol)", 
                 nextScene: 'villageLife',
-                textImage: 'img/village_card.png' // Kendi kart görseliniz
+                textImage: 'img/village_card.png' 
             },
             { 
-                text: "Dilek Ağacı efsanesini araştırmaya karar vermek.", 
-                nextScene: 'forestCall',
-                textImage: 'img/forest_card.png' // Kendi kart görseliniz
+                text: "Dilek Ağacı efsanesini araştırmaya karar vermek. (Macera)", 
+                nextScene: 'preparingForJourney',
+                textImage: 'img/forest_card.png' 
             }
         ]
     },
 
-    // Sahne 2A: Köy Hayatı (A seçeneği)
+    // Sahne 2A: Köy Hayatı
     'villageLife': {
-        text: "Elara, fırında Amca Borin'e yardım etti. Gün sıradan, huzurlu ama heyecansız geçti. Akşam yatağına uzandığında, 'Acaba diğer yol nasıl olurdu?' diye düşünmeden edemedi. Sıradan bir hayatın sonuydu. Belki de macera peşinde koşsaydı daha farklı olurdu...",
+        text: "Elara, fırında Amca Borin'e yardım etti. Hamur yoğurdu, sıcak ekmeklerin kokusuyla burnu doldu. Ardından annesine odun taşıdı, komşularla sohbet etti. Gün sıradan, huzurlu ama heyecansız geçti. Akşam yatağına uzandığında, dışarıdaki rüzgarın fısıltılarını dinlerken, 'Acaba diğer yol nasıl olurdu?' diye düşünmeden edemedi. Bilinmeyene duyduğu özlem, kalbinde küçük bir sızı bıraktı. Yarına dair umudu ve biraz da pişmanlığı vardı. Sıradan bir hayatın sonuydu.",
         choices: [
             { 
                 text: "Oyunu Baştan Başla", 
                 nextScene: 'restartGame',
-                textImage: 'img/restart_game.png' // Kendi kart görseliniz
+                textImage: 'img/restart_game.png' 
             } 
         ]
     },
 
-    // Sahne 2B: Ormanın Çağrısı (B seçeneği)
-    'forestCall': {
-        text: "Elara, sırt çantasına biraz yiyecek ve su doldurup gizlice Woodhollow Ormanı'na doğru yola çıktı. Orman giderek sıklaşıyor, ağaçlar gökyüzünü kapatıyordu. Eski bir haritada Dilek Ağacı'nın yerini gösteren kabataslak bir çizim bulmuştu. Patikayı takip ederken, garip bir ses duydu.",
+    // Sahne 2B: Maceraya Hazırlık
+    'preparingForJourney': {
+        text: "Dilek Ağacı fikri Elara'nın zihnini ele geçirmişti. Maceraya atılmadan önce iyi hazırlanmalıydı. Evdeki erzaklarına baktı. Yolda işine yarayacak birkaç şey alabilirdi.",
         choices: [
             { 
-                text: "Sese doğru ilerlemek.", 
-                nextScene: 'helpHand',
-                textImage: 'img/sound_card.png' // Kendi kart görseliniz
+                text: "Sadece biraz kuru ekmek ve su al. (Hafif ve Hızlı)", 
+                nextScene: 'forestCall_light', 
+                textImage: 'img/bread_water.png' 
             },
             { 
-                text: "Sesi görmezden gelip patikaya devam etmek.", 
-                nextScene: 'lostPath',
-                textImage: 'img/ignore_sound_card.png' // Kendi kart görseliniz
+                text: "Dayanıklı bir ip, keskin bir bıçak ve daha fazla erzak topla. (Tedbirli)", 
+                nextScene: 'forestCall_heavy', 
+                textImage: 'img/supplies.png' 
             }
         ]
     },
 
-    // Sahne 3A: Yardım Eli
-    'helpHand': {
-        text: "Sese doğru ilerleyen Elara, küçük bir dere kenarında bacağı sıkışmış yaşlı bir gezginle karşılaştı. Gezginin yanındaki sepetten etrafa nadir bitkiler saçılmıştı.",
+    // Sahne 3B-Hafif: Ormanın Çağrısı (Hafif Erzak)
+    'forestCall_light': {
+        text: "Elara, sırt çantasına sadece biraz yiyecek ve su doldurup gizlice Woodhollow Ormanı'na doğru yola çıktı. Hafif adımlarla ilerlerken, orman giderek sıklaşıyor, ağaçlar gökyüzünü kapatıyordu. Eski bir haritada Dilek Ağacı'nın yerini gösteren kabataslak bir çizim bulmuştu. Patikayı takip ederken, garip bir hışırtı sesi duydu. Yüksek bir yerden geliyor gibiydi. İçinde hem merak hem de hafif bir korku vardı.",
+        choices: [
+            { 
+                text: "Sese doğru ilerlemek.", 
+                nextScene: 'mysteriousSound', 
+                textImage: 'img/sound_card.png' 
+            },
+            { 
+                text: "Sesi görmezden gelip patikaya devam etmek.", 
+                nextScene: 'lostPath', 
+                textImage: 'img/ignore_sound_card.png' 
+            }
+        ]
+    },
+
+    // Sahne 3B-Tedbirli: Ormanın Çağrısı (Tedbirli Erzak)
+    'forestCall_heavy': {
+        text: "Elara, sırt çantasına dayanıklı bir ip, keskin bir bıçak ve bolca erzak doldurup gizlice Woodhollow Ormanı'na doğru yola çıktı. Ağırlığı hissetse de içi rahattı. Orman giderek sıklaşıyor, ağaçlar gökyüzünü kapatıyordu. Eski bir haritada Dilek Ağacı'nın yerini gösteren kabataslak bir çizim bulmuştu. Patikayı takip ederken, garip bir hışırtı sesi duydu. Yüksek bir yerden geliyor gibiydi. Tedbirli oluşu, ona fazladan güven veriyordu ama yine de temkinliydi.",
+        choices: [
+            { 
+                text: "Sese doğru ilerlemek.", 
+                nextScene: 'mysteriousSound', 
+                textImage: 'img/sound_card.png' 
+            },
+            { 
+                text: "Sesi görmezden gelip patikaya devam etmek.", 
+                nextScene: 'lostPath_prepared', 
+                textImage: 'img/ignore_sound_card.png' 
+            } 
+        ]
+    },
+
+    // Sahne 4B-YENİ: Gizemli Ses
+    'mysteriousSound': {
+        text: "Elara sese doğru temkinli adımlarla ilerledi. Gür yaprakların arasından geçince küçük bir dere kenarında bacağı sıkışmış yaşlı bir gezginle karşılaştı. Gezginin yanındaki sepetten etrafa nadir bitkiler saçılmıştı. Yaşlı adamın acı içinde kıvrandığını görmek, Elara'nın kalbini burktu. Ancak, bir şüphe de içinde filizlendi. Bu tuzağa benzer bir durum muydu?",
         choices: [
             { 
                 text: "Gezgine yardım etmek.", 
-                nextScene: 'travelerGratitude',
-                textImage: 'img/help_hand.png' // Kendi kart görseliniz
+                nextScene: 'travelerGratitude', 
+                textImage: 'img/help_hand.png' 
+            },
+            { 
+                text: "Durumu uzaktan gözlemle ve şüphelerini kontrol et.", 
+                nextScene: 'observeTraveler', 
+                textImage: 'img/observe_traveler.png' 
             },
             { 
                 text: "Zaten acelem var diyerek geçip gitmek.", 
                 nextScene: 'lostPath', 
-                damage: 1, // Bu seçim 1 can azaltır
-                textImage: 'img/ignore_traveler.png' // Kendi kart görseliniz
-            } 
+                damage: 1, 
+                textImage: 'img/ignore_traveler.png' 
+            }
         ]
     },
 
-    // Sahne 4A: Gezginin Minnettarlığı (Gezgin yardımı)
-    'travelerGratitude': {
-        text: "Elara, büyük çabalarla gezginin bacağını sıkıştığı yerden kurtardı. Yaşlı adam minnetle gülümsedi. 'Çok teşekkür ederim genç Elara. Ben bir bitki bilimciyim ve bu otlar benim hayatım. Bu iyiliğin karşılığında sana bir şey borçluyum.' Gezgin, Elara'ya parlayan, eski bir **pusula** verdi. 'Bu pusula, kaybolduğunda sana doğru yolu gösterir, ama sadece gerçekten önemli bir karar anında...' Elara, pusulayı alıp yoluna devam etti.",
+    // Sahne 5A-YENİ: Gezgini Gözlemleme
+    'observeTraveler': {
+        text: "Elara, gezgine hemen yaklaşmak yerine bir ağacın arkasına saklanıp durumu uzaktan gözlemlemeye karar verdi. Birkaç dakika sonra, yaşlı adamın gerçekten çaresiz olduğunu, sahtekarlık yapmadığını anladı. Vicdanı rahatlamıştı, ama aynı zamanda biraz zaman kaybetmişti.",
+        choices: [
+            { 
+                text: "Artık gezgine yardım et.", 
+                nextScene: 'travelerGratitude_delayed', 
+                textImage: 'img/help_hand.png' 
+            },
+            { 
+                text: "Geç kalmadan yoluma devam edeyim.", 
+                nextScene: 'lostPath', 
+                damage: 1, 
+                textImage: 'img/ignore_traveler.png' 
+            }
+        ]
+    },
+
+    // Sahne 6A-YENİ: Gezginin Minnettarlığı (Gecikmeli)
+    'travelerGratitude_delayed': {
+        text: "Elara, gezgine yaklaşıp bacağını kurtardı. Yaşlı adam minnetle gülümsedi. 'Çok teşekkür ederim genç Elara. Bir an için tereddüt ettiğini hissettim ama yardım etme isteğin galip geldi. Ben bir bitki bilimciyim ve bu otlar benim hayatım. Bu iyiliğin karşılığında sana bir şey borçluyum.' Gezgin, Elara'ya parlayan, eski bir **pusula** verdi. 'Bu pusula, kaybolduğunda sana doğru yolu gösterir, ama sadece gerçekten önemli bir karar anında... Ve bu, verdiğin her kararı daha da önemseyeceğin anlamına gelir.' Elara, pusulayı alıp yoluna devam etti. Pusulanın hafif nabzı avucunda hissediliyordu.",
         choices: [
             { 
                 text: "Yola devam et.", 
-                nextScene: 'dilekTreeAccess',
-                textImage: 'img/continue_path.png' // Kendi kart görseliniz
+                nextScene: 'dilekTreeAccess', 
+                textImage: 'img/continue_path.png' 
             }
         ],
-        effect: () => {
-            gameState.inventory.push('pusula');
-            console.log("Oyuncu pusulayı kazandı! Envanter:", gameState.inventory);
-        }
+        effect: () => { gameState.inventory.push('pusula'); console.log("Oyuncu pusulayı kazandı! Envanter:", gameState.inventory); }
     },
-
-    // Sahne 3B/4B: Kayıp Patika
+    
+    // Sahne 5B-Normal: Kayıp Patika (Normal)
     'lostPath': {
-        text: "Elara, sese aldırış etmeden veya gezgini yalnız bırakarak patikasına devam etti. Ancak bir süre sonra patika iyice inceldi ve kayboldu. Etrafı saran ağaçlar artık hiç tanıdık gelmiyordu. Vahşi hayvan sesleri yankılanıyordu.",
+        text: "Elara, sese aldırış etmeden veya gezgini yalnız bırakarak patikasına devam etti. Ancak bir süre sonra patika iyice inceldi ve kayboldu. Etrafı saran ağaçlar artık hiç tanıdık gelmiyordu. Vahşi hayvan sesleri yankılanıyordu. Gittikçe endişeleniyordu, adımları hızlandı.",
         choices: [
             { 
-                text: "Rastgele bir yöne doğru ilerlemek.", 
+                text: "Rastgele bir yöne doğru ilerlemek. (Kaybolma Riski)", 
                 nextScene: 'lostEnding', 
-                damage: 2, // Bu seçim 2 can azaltır
-                textImage: 'img/lost_forest.png' // Kendi kart görseliniz
+                damage: 2, 
+                textImage: 'img/lost_forest.png' 
             }, 
             { 
-                text: "Geri dönmeye çalışmak.", 
+                text: "Geri dönmeye çalışmak. (Yorucu)", 
                 nextScene: 'returnToVillageRisk', 
-                damage: 1, // Bu seçim 1 can azaltır
-                textImage: 'img/return_path.png' // Kendi kart görseliniz
+                damage: 1, 
+                textImage: 'img/return_path.png' 
+            },
+            { 
+                text: "Pusulayı kullan.", 
+                nextScene: 'dilekTreeAccess', 
+                textImage: 'img/compass_use.png', 
+                requires: 'pusula' // Oyuncunun envanterinde "pusula" olmalı
             }
-            // Pusula kontrolü için örnek (şu an pasif):
-            // { 
-            //     text: "Pusulayı kullan.", 
-            //     nextScene: 'dilekTreeAccess', 
-            //     textImage: 'img/compass_use.png', // Kendi kart görseliniz
-            //     requires: 'pusula' // Oyuncunun envanterinde "pusula" olması gerekir
-            // } 
+        ]
+    },
+
+    // Sahne 5B-Hazırlıklı: Kayıp Patika (Hazırlıklı)
+    'lostPath_prepared': {
+        text: "Elara, tedbirli oluşunun rahatlığıyla patikaya devam etti. Ancak bir süre sonra patika iyice inceldi ve kayboldu. Etrafı saran ağaçlar artık hiç tanıdık gelmiyordu. Vahşi hayvan sesleri yankılanıyordu. Sakinliğini koruyarak çantasındaki eşyaları düşündü. Paniğe kapılmadan bir çözüm yolu aramaya başladı.",
+        choices: [
+            { 
+                text: "Keskin bıçağı kullanarak kendine bir yol açmak.", 
+                nextScene: 'clearPath', 
+                textImage: 'img/use_knife.png' 
+            },
+            { 
+                text: "Ağaca tırmanıp yolu gözlemlemeye çalışmak. (Riskli)", 
+                nextScene: 'climbTreeAttempt', 
+                damage: 1, 
+                textImage: 'img/climb_tree.png' 
+            },
+            { 
+                text: "Pusulayı kullan.", 
+                nextScene: 'dilekTreeAccess', 
+                textImage: 'img/compass_use.png', 
+                requires: 'pusula' 
+            }
+        ]
+    },
+
+    // Sahne 6B-1: Yol Açmak
+    'clearPath': {
+        text: "Elara, keskin bıçağını kullanarak ormanın sık çalılıkları arasında kendine bir yol açtı. Kolay değildi ama kararlılığı sayesinde ilerleyebildi. Bir süre sonra uzakta, ağaçların arasından hafif bir ışıltı gördü. Dilek Ağacı olmalıydı.",
+        choices: [
+            { 
+                text: "Işıltıya doğru ilerle.", 
+                nextScene: 'dilekTreeAccess', 
+                textImage: 'img/follow_light.png' 
+            }
+        ]
+    },
+
+    // Sahne 6B-2: Ağaca Tırmanma Girişimi
+    'climbTreeAttempt': {
+        text: "Elara, en yakın ağaca tırmanmaya çalıştı. Dallar kaygandı ve tırmanmak düşündüğünden zordu. Bir dala uzanırken ayağı kaydı ve aşağı yuvarlandı, hafifçe sırtını ve bacağını vurdu. Canı acımıştı ve morali bozulmuştu. Ne yazık ki, yukarıdan da net bir yol göremedi. Yorgunluk hissi tüm vücudunu sarmıştı.",
+        choices: [
+            { 
+                text: "Vazgeç ve rastgele bir yöne ilerle.", 
+                nextScene: 'lostEnding', 
+                damage: 1, 
+                textImage: 'img/give_up.png' 
+            }, 
+            { 
+                text: "Geri dönmeye çalış.", 
+                nextScene: 'returnToVillageRisk', 
+                damage: 0, 
+                textImage: 'img/return_path.png' 
+            }
         ]
     },
 
     'returnToVillageRisk': {
-        text: "Ormanda zorlu bir yolculuktan sonra, Elara yaralı bereli bir şekilde Woodhollow Köyü'ne geri döndü. Macerası kısa sürmüştü...",
+        text: "Ormanda zorlu bir yolculuktan sonra, Elara yaralı bereli ve bitkin bir şekilde Woodhollow Köyü'ne geri döndü. Macerası kısa sürmüştü ve kalbinde büyük bir hayal kırıklığı vardı. Pişmanlık ve yorgunluk, ruhunu kaplamıştı. Belki de bu hayat, onun için değildi...",
         choices: [
             { 
                 text: "Oyunu Baştan Başla", 
                 nextScene: 'restartGame',
-                textImage: 'img/restart_game.png' // Kendi kart görseliniz
+                textImage: 'img/restart_game.png' 
             }
         ]
     },
 
-    // Dilek Ağacına Ulaşma (Yardımla veya zorlu yolla)
+    // Sahne 8: Dilek Ağacı'na Ulaşma
     'dilekTreeAccess': {
-        text: "Uzun ve zorlu bir yolculuğun ardından, Elara sonunda o devasa ağacın karşısında durdu. Gökyüzüne uzanan dalları, yapraklarından yayılan hafif bir ışıltı ve gövdesindeki oyuklarda biriken dilek notları... Dilek Ağacı'ydı bu. Yaklaştığında, ağacın köklerinde parlayan bir taş gördü. Bu taş, dilekleri gerçekleştirmek için bir bedel istiyordu.",
+        text: "Uzun ve zorlu bir yolculuğun ardından, Elara sonunda o devasa ağacın karşısında durdu. Gökyüzüne uzanan dalları, yapraklarından yayılan hafif bir ışıltı ve gövdesindeki oyuklarda biriken dilek notları... Dilek Ağacı'ydı bu. Havada büyülü bir enerji hissediliyordu. Yaklaştığında, ağacın köklerinde parlayan bir taş gördü. Bu taş, dilekleri gerçekleştirmek için bir bedel istiyordu. Taşın yüzeyindeki antik yazılar, zihnine fısıldar gibiydi: 'Her dileğin bir yankısı vardır...'",
         choices: [
             { 
                 text: "Bir dilek dilemek.", 
-                nextScene: 'wishOptions',
-                textImage: 'img/wish_tree.png' // Kendi kart görseliniz
+                nextScene: 'wishOptions', 
+                textImage: 'img/wish_tree.png' 
             },
             { 
                 text: "Dilek dilemeden geri dönmek.", 
-                nextScene: 'returnEnding',
-                textImage: 'img/turn_back.png' // Kendi kart görseliniz
+                nextScene: 'returnEnding', 
+                textImage: 'img/turn_back.png' 
             }
         ]
     },
 
-    // Dilek Seçenekleri
+    // Sahne 9: Dilek Seçenekleri
     'wishOptions': {
-        text: "Ne dilemek istersin?",
+        text: "Ne dilemek istersin? Taşın ışıltısı parmak uçlarında geziniyor, her bir dileğin fısıltısını ruhunda hissediyordu. Hangi yol, Elara'nın kalbindeki boşluğu dolduracaktı?",
         choices: [
             { 
                 text: "Zenginlik dilemek.", 
                 nextScene: 'wealthEnding', 
-                textImage: 'img/gold_coin.png' // Kendi kart görseliniz
+                textImage: 'img/gold_coin.png' 
             },
             { 
                 text: "Güç dilemek.", 
                 nextScene: 'powerEnding', 
-                textImage: 'img/sword.png' // Kendi kart görseliniz
+                textImage: 'img/sword.png' 
             },
             { 
                 text: "Aşk dilemek.", 
                 nextScene: 'loveEnding', 
-                textImage: 'img/heart_filled_wish.png' // Kendi kart görseliniz (farklı ikon)
+                textImage: 'img/heart_filled_wish.png' 
             },
             { 
                 text: "Bilgi dilemek.", 
                 nextScene: 'knowledgeEnding', 
-                textImage: 'img/book.png' // Kendi kart görseliniz
+                textImage: 'img/book.png' 
             }
         ]
     },
 
     // Sonlar
     'wealthEnding': {
-        text: "Elara zengin bir tüccar oldu, ama paranın yalnızlığına çare olmadığını anladı. Köyünü ve eski hayatını özledi. Servet içinde, ama mutsuz bir yaşam sürdü. Oyun Sonu.",
+        text: "Elara zengin bir tüccar oldu, şehirler gezdi, saraylarda yaşadı. Her dileği yerine geldi, ama bu servetle birlikte gelen yalnızlık ve boşluk ruhunu kemirdi. Köyünü, basit ama gerçek ilişkilerini özledi. Elde ettiği her şey, kaybettiği sıcaklığın yerini dolduramadı. Servet içinde, ama mutsuz bir yaşam sürdü. Dileğin bedeli, kalbine ağır geldi. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'powerEnding': {
-        text: "Elara olağanüstü güçlere sahip oldu. Bu gücü iyiye mi yoksa kötüye mi kullanacağı onun sonraki kararlarına bağlıydı. Bu hikaye burada son buldu, ancak Elara'nın kaderi senin elinde. Oyun Sonu.",
+        text: "Elara olağanüstü güçlere sahip oldu. Ormanın en derin sırlarını çözebiliyor, yaban hayvanlarını kontrol edebiliyor, hatta fırtınaları dindirebiliyordu. Ancak bu güç, ona büyük bir yalnızlık getirdi. Artık kimse onunla eşit değildi, kimse onu tam olarak anlayamıyordu. Gücüyle Woodhollow'u koruyan bir efsane mi olacak, yoksa gücünün kölesi mi? Bu hikaye burada son buldu, ancak Elara'nın kaderi senin elinde. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'loveEnding': {
-        text: "Elara, kalbini ısıtan biriyle tanıştı, ancak bu ilişkinin önündeki engelleri aşmak zorunda kaldı. Büyük zorluklar karşısında dahi aşkına sadık kaldı. Oyun Sonu.",
+        text: "Elara, kalbini ısıtan biriyle tanıştı. Dileği gerçek olmuştu, ama bu ilişkinin önündeki engeller, sıradan bir hayatın zorluklarından çok daha fazlaydı. Aşkları sınandı, imkansızlıklarla yüzleştiler. İki kalbi birleştirmek için büyük fedakarlıklar yapması, kendi dileğinden bile vazgeçmesi gerekti. Büyük zorluklar karşısında dahi aşkına sadık kaldı ve gerçek mutluluğu buldu. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'knowledgeEnding': {
-        text: "Elara dünyanın tüm gizemlerini öğrendi, ancak bu bilginin ağırlığı omuzlarına bindi. Artık sıradan hayat ona anlamsız geliyordu. Yalnız bir bilge olarak hayatına devam etti. Oyun Sonu.",
+        text: "Elara dünyanın tüm gizemlerini öğrendi. Unutulmuş lisanları konuşabiliyor, yıldızların hareketlerini yorumlayabiliyor, evrenin sırlarına vakıf olabiliyordu. Ancak bu bilginin ağırlığı omuzlarına bindi. Öğrendiği her sır, onu insanlardan biraz daha uzaklaştırdı. Artık sıradan hayat ona anlamsız geliyordu, insanlar basit ve küçük görünüyordu. Yalnız bir bilge olarak hayatına devam etti, dünyayı sessizce izleyerek. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'returnEnding': {
-        text: "Elara köye geri döndü. Hayatı yine sıradandı, ama bu macera ona yeni bir bakış açısı kazandırdı. Belki de asıl macera, günlük hayatın içinde gizliydi. İç huzuru buldu. Oyun Sonu.",
+        text: "Elara, Dilek Ağacı'nın yanından dilek dilemeden geri döndü. Belki de bir dileğin bedeli, elde edeceği faydadan daha ağır olacaktı. Köye döndüğünde hayatı yine sıradandı, ama bu macera ona yeni bir bakış açısı kazandırdı. Hayatın küçük anlarında gizli güzellikleri, komşularının gülümsemesini, Amca Borin'in sıcak ekmek kokusunu yeniden fark etti. Beklentisizce iç huzuru buldu. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'lostEnding': {
-        text: "Elara ormanda kayboldu, patikayı bulamadı ve günler sonra bitkin düşerek hayatını kaybetti. Kaderi, basit bir yanlış kararla mühürlendi. Oyun Sonu.",
+        text: "Elara ormanda kayboldu, patikayı bulamadı ve günler sonra bitkin düşerek hayatını kaybetti. Susuzluk, açlık ve vahşi doğanın acımasızlığı onu tüketti. Kaderi, basit bir yanlış kararla mühürlendi. Cesedi asla bulunamadı, sadece ormanın fısıltıları arasında hüzünlü bir hikaye olarak kaldı. Woodhollow'da onu hatırlayan tek şey, ormana açılan patikanın sessiz girişiydi. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/restart_game.png' }]
     },
     'gameOver': {
-        text: "Canın bitti! Macera burada sona erdi. Daha dikkatli kararlar vermeliydin...",
+        text: "Canın bitti! Macera burada sona erdi. Daha dikkatli kararlar vermeliydin... Woodhollow'da seni hatırlayan tek şey, ormanın unutulmuş bir köşesindeki sessiz bir anıydı. Pişmanlık, son hissin oldu. Oyun Sonu.",
         choices: [{ text: "Oyunu Baştan Başla", nextScene: 'restartGame', textImage: 'img/game_over_restart.png' }]
     },
     'restartGame': {
         text: "Oyun baştan başlıyor...", // Bu metin görünmez, sadece effect çalışır
         choices: [], 
         effect: () => {
-            // Oyunu sıfırla ve ana menüyü göster
             gameState.currentHP = gameState.maxHP; // Canı sıfırla
             gameState.inventory = []; // Envanteri sıfırla
-            updateHearts(); // Kalpleri güncelle (ana menüye dönmeden önce)
+            updateHearts(); // Kalpleri güncelle
             gameContainer.classList.remove('visible'); // Oyun ekranını gizle
             gameContainer.classList.add('hidden');
             menuContainer.classList.remove('hidden'); // Ana menüyü göster
@@ -234,19 +340,21 @@ const scenes = {
     }
 };
 
+// ... (updateHearts, loadScene ve event listener kodları buranın altında aynen kalacak) ...
+
 // Oyunun şu anki sahnesini tutan değişken
-let currentScene = 'intro'; // Oyuncunun oyuna başladığı ilk sahne
+let currentScene = 'intro';
 
 // Kalpleri güncelleyen fonksiyon
 function updateHearts() {
-    heartsContainer.innerHTML = ''; // Önceki kalpleri temizle
+    heartsContainer.innerHTML = '';
     for (let i = 0; i < gameState.maxHP; i++) {
         const heart = document.createElement('div');
         heart.classList.add('heart-icon');
         if (i < gameState.currentHP) {
-            heart.classList.add('heart-full'); // Can varsa dolu kalp
+            heart.classList.add('heart-full');
         } else {
-            heart.classList.add('heart-empty'); // Can yoksa boş kalp
+            heart.classList.add('heart-empty');
         }
         heartsContainer.appendChild(heart);
     }
@@ -260,13 +368,11 @@ function loadScene(sceneName) {
         return;
     }
 
-    // Oyun bittiyse ve 'gameOver' sahnesinde değilsek, 'gameOver'a yönlendir
     if (gameState.currentHP <= 0 && sceneName !== 'gameOver') {
         loadScene('gameOver');
         return;
     }
 
-    // Eğer yeniden başlatma sahnesiyse, özel efekti çalıştır ve çık
     if (sceneName === 'restartGame') {
         if (scene.effect) {
             scene.effect();
@@ -274,28 +380,21 @@ function loadScene(sceneName) {
         return; 
     }
 
-    // Geçiş efekti için mevcut içeriği gizle
     storyText.style.opacity = 0;
     choicesContainer.style.opacity = 0;
     
-    // Kısa bir gecikme sonrası yeni içeriği yükle
     setTimeout(() => { 
         storyText.textContent = scene.text;
-        choicesContainer.innerHTML = ''; // Önceki seçenekleri temizle
+        choicesContainer.innerHTML = '';
 
-        // Seçenekleri oluştur ve ekle
         scene.choices.forEach(choice => {
-            // Eğer bir seçim için özel bir gereksinim varsa (örn: pusula)
-            // ve oyuncuda yoksa, bu seçeneği gösterme.
-            // Bu kısmı, pusula mekaniğini aktif etmek istediğinde kullanabilirsin.
-            // if (choice.requires && !gameState.inventory.includes(choice.requires)) {
-            //     return; // Bu seçeneği atla
-            // }
+            if (choice.requires && !gameState.inventory.includes(choice.requires)) {
+                return; 
+            }
 
             const choiceCard = document.createElement('div');
             choiceCard.classList.add('choice-card');
             
-            // Seçenek görseli varsa ekle
             if (choice.textImage) {
                 const img = document.createElement('img');
                 img.src = choice.textImage;
@@ -304,56 +403,50 @@ function loadScene(sceneName) {
                 choiceCard.appendChild(img);
             }
 
-            const choiceText = document.createElement('p'); // Metni p etiketi içine al
+            const choiceText = document.createElement('p');
             choiceText.textContent = choice.text;
             choiceCard.appendChild(choiceText);
 
 
             choiceCard.addEventListener('click', () => {
-                // Seçimin bir zararı varsa HP'yi azalt
-                if (choice.damage) {
+                if (choice.damage !== undefined) {
                     gameState.currentHP -= choice.damage;
-                    updateHearts(); // Kalpleri güncelle
+                    updateHearts();
                     if (gameState.currentHP <= 0) {
-                        loadScene('gameOver'); // Can bittiyse oyun sonu sahnesine git
-                        return; // Daha fazla işlem yapma
+                        loadScene('gameOver');
+                        return;
                     }
                 }
 
-                // Seçimin bir etkisi varsa çalıştır (örn: pusula kazanma)
                 if (scene.effect) {
                     scene.effect();
                 }
 
-                // Yeni sahneyi yükle
                 loadScene(choice.nextScene); 
             });
             choicesContainer.appendChild(choiceCard);
         });
 
-        // Yeni içeriği görünür yap
         storyText.style.opacity = 1;
         choicesContainer.style.opacity = 1;
 
-        currentScene = sceneName; // Güncel sahneyi kaydet
-    }, 300); // 300ms gecikme (CSS geçiş süresiyle uyumlu)
+        currentScene = sceneName;
+    }, 300);
 }
 
 // Başlat butonuna tıklanınca
 startButton.addEventListener('click', () => {
-    menuContainer.classList.add('hidden'); // Menüyü gizle
-    gameContainer.classList.remove('hidden'); // Oyun kapsayıcısını görünür yap
-    gameContainer.classList.add('visible'); // Görünürlük animasyonunu tetikle
+    menuContainer.classList.add('hidden');
+    gameContainer.classList.remove('hidden');
+    gameContainer.classList.add('visible');
 
-    // Oyun başladığında kalpleri ve ilk sahneyi yükle
-    gameState.currentHP = gameState.maxHP; // Oyuna tam can ile başla
-    gameState.inventory = []; // Envanteri sıfırla (eğer varsa)
-    updateHearts(); // Kalpleri başlangıçta doldur
-    loadScene('intro'); // Oyunun ilk sahnesini yükle
+    gameState.currentHP = gameState.maxHP;
+    gameState.inventory = []; 
+    updateHearts();
+    loadScene('intro');
 });
 
-// Sayfa yüklendiğinde (henüz oyun başlamadan)
+// Sayfa yüklendiğinde
 document.addEventListener('DOMContentLoaded', () => {
-    // Burada oyunun ana menüsü göründüğünde, kalplerin veya oyun öğelerinin 
-    // doğrudan görünmemesi sağlanır. Zaten başlangıçta gameContainer 'hidden' sınıfına sahip.
+    // Burada herhangi bir ek işlem yok, gameContainer başlangıçta gizli.
 });
